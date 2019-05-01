@@ -20,32 +20,40 @@
 
     <base target="_blank">
 
-    <title>getUserMedia + CSS filters</title>
+    <title>4 LD</title>
 
-    <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
-    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../../css/main.css">
 
     <style>
+        :root {
+            --slider: 0;
+        }
         .none {
             -webkit-filter: none;
             filter: none;
         }
         .blur {
-            -webkit-filter: blur(3px);
-            filter: blur(3px);
+            -webkit-filter: blur(calc(var(--slider) * 0.1px));
+            filter: blur(calc(var(--slider) * 0.1px));
         }
         .grayscale {
-            -webkit-filter: grayscale(1);
-            filter: grayscale(1);
+            -webkit-filter: grayscale(var(--slider));
+            filter: grayscale(var(--slider));
         }
         .invert {
-            -webkit-filter: invert(1);
-            filter: invert(1);
+            -webkit-filter: invert(var(--slider));
+            filter: invert(var(--slider));
         }
         .sepia {
-            -webkit-filter: sepia(1);
-            filter: sepia(1);
+            -webkit-filter: sepia(var(--slider));
+            filter: sepia(var(--slider));
+        }
+        .opacity {
+            -webkit-filter: opacity(calc(var(--slider) * 1%));
+            filter: opacity(calc(var(--slider) * 1%));
+        }
+        .brightness {
+            -webkit-filter: brightness(calc(var(--slider) * 5%));
+            filter: brightness(calc(var(--slider) * 5%));
         }
         button#snapshot {
             margin: 0 10px 25px 0;
@@ -61,7 +69,8 @@
 <body>
 <div id="container">
 
-    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a> <span>getUserMedia + CSS filters</span>
+    <h1>
+	<span>4 LD</span>
     </h1>
 
     <video playsinline autoplay></video>
@@ -73,24 +82,25 @@
         <option value="grayscale">Grayscale</option>
         <option value="invert">Invert</option>
         <option value="sepia">Sepia</option>
+        <option value="opacity">Opacity</option>
+        <option value="brightness">Brightness</option>
     </select>
 
+	<input type="range" id="sliderRange" value="0" onchange="sliderFunction()">
     <button id="snapshot">Take snapshot</button>
 
     <canvas></canvas>
-
-    <p>Draw a frame from the getUserMedia video stream onto the canvas element, then apply CSS filters.</p>
-
-    <p>The variables <code>canvas</code>, <code>video</code> and <code>stream</code> are in global scope, so you can
-        inspect them from the console.</p>
-
-    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/filter"
-       title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
 </div>
 
+<script>
+function sliderFunction()
+{
+	var x = document.getElementById("sliderRange").value;
+	document.documentElement.style.setProperty('--slider', x);	 	
+}
+</script>
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src="js/main.js" async></script>
 
-<script src="../../../js/lib/ga.js"></script>
 </body>
 </html>
